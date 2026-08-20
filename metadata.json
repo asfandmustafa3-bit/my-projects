@@ -1,0 +1,6 @@
+{
+  "name": "Submind Audio Studio",
+  "description": "Complete in-browser private AI audio suite featuring Silence Remover, AI Transcriber, Noise Remover, Audio Trimmer, Speed Changer, Merger, and Converter.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
