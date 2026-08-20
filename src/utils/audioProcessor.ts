@@ -546,6 +546,65 @@ function writeString(view: DataView, offset: number, string: string) {
 }
 
 /**
+ * Resamples an AudioBuffer to 16kHz mono WAV for high-speed speech transcription
+ */
+export function resampleTo16kMonoWavBlob(buffer: AudioBuffer): Blob {
+  const targetSampleRate = 16000;
+  const numChannels = buffer.numberOfChannels;
+  const totalTargetSamples = Math.max(1, Math.floor(buffer.duration * targetSampleRate));
+
+  // Mix down channels to mono float32
+  const monoData = new Float32Array(buffer.length);
+  for (let c = 0; c < numChannels; c++) {
+    const channel = buffer.getChannelData(c);
+    for (let i = 0; i < buffer.length; i++) {
+      monoData[i] += channel[i] / numChannels;
+    }
+  }
+
+  // Linear interpolation resampling
+  const resampled = new Float32Array(totalTargetSamples);
+  const ratio = buffer.length / totalTargetSamples;
+  for (let i = 0; i < totalTargetSamples; i++) {
+    const srcIndex = i * ratio;
+    const i0 = Math.floor(srcIndex);
+    const i1 = Math.min(i0 + 1, buffer.length - 1);
+    const frac = srcIndex - i0;
+    resampled[i] = monoData[i0] * (1 - frac) + monoData[i1] * frac;
+  }
+
+  // Create 16-bit PCM WAV Blob
+  const byteLength = 44 + totalTargetSamples * 2;
+  const arrayBuffer = new ArrayBuffer(byteLength);
+  const view = new DataView(arrayBuffer);
+
+  // RIFF identifier
+  writeString(view, 0, 'RIFF');
+  view.setUint32(4, 36 + totalTargetSamples * 2, true);
+  writeString(view, 8, 'WAVE');
+  writeString(view, 12, 'fmt ');
+  view.setUint32(16, 16, true); // Subchunk1Size
+  view.setUint16(20, 1, true); // AudioFormat PCM = 1
+  view.setUint16(22, 1, true); // NumChannels = 1
+  view.setUint32(24, targetSampleRate, true); // SampleRate = 16000
+  view.setUint32(28, targetSampleRate * 2, true); // ByteRate = 16000 * 1 * 2
+  view.setUint16(32, 2, true); // BlockAlign = 1 * 2
+  view.setUint16(34, 16, true); // BitsPerSample = 16
+  writeString(view, 36, 'data');
+  view.setUint32(40, totalTargetSamples * 2, true);
+
+  let offset = 44;
+  for (let i = 0; i < totalTargetSamples; i++) {
+    const s = Math.max(-1, Math.min(1, resampled[i]));
+    const intSample = s < 0 ? s * 0x8000 : s * 0x7fff;
+    view.setInt16(offset, intSample, true);
+    offset += 2;
+  }
+
+  return new Blob([arrayBuffer], { type: 'audio/wav' });
+}
+
+/**
  * Formats seconds into MM:SS.ms or MM:SS
  */
 export function formatTime(seconds: number, includeMs = false): string {

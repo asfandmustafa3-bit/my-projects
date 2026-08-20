@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Code2,
   Sparkles,
   ShieldCheck,
   Zap,
@@ -11,26 +10,25 @@ import {
   Layers,
   Wand2,
   RefreshCw,
-  MessageSquareQuote,
   Gauge,
   Sliders,
   ArrowRight,
   Mail,
   CheckCircle2,
-  Cpu,
   Lock,
-  Globe,
-  Star,
   Terminal,
+  Download,
+  Github,
 } from 'lucide-react';
 import { ToolTab } from '../types';
 
 interface HomePageProps {
   onNavigate: (tab: ToolTab) => void;
   hasAudio: boolean;
+  onOpenSetup?: () => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
+export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio, onOpenSetup }) => {
   return (
     <div className="space-y-12 pb-16">
       {/* 1. Hero & Developer Introduction */}
@@ -43,7 +41,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
           <div className="space-y-5 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Submind Audio Studio • Developed by Asfand</span>
+              <span>Submind Audio Studio • Engineered by Asfand Mustafa</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
@@ -55,10 +53,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
             </h1>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-              Welcome! I am <strong className="text-white font-bold">Asfand</strong>, the developer behind{' '}
-              <span className="text-indigo-300 font-semibold">Submind Audio Studio</span>. I designed this platform
-              to give podcasters, video creators, audio engineers, and students a fast, 100% private, and free studio
-              suite that processes audio locally using modern Web Audio DSP and Google Gemini AI.
+              Welcome! I am <strong className="text-white font-bold">Asfand Mustafa</strong>, the developer behind{' '}
+              <span className="text-indigo-300 font-semibold">Submind Audio Studio</span>. I engineered this platform
+              to give podcasters, video creators, audio engineers, and developers an ultra-fast, 100% private,
+              and completely free workstation that processes audio locally using modern Web Audio DSP and Google Gemini AI.
             </p>
 
             {/* Quick Action Buttons */}
@@ -78,6 +76,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
                 <Scissors className="w-4 h-4 text-indigo-400" />
                 <span>Launch Silence Remover</span>
               </button>
+
+              {onOpenSetup && (
+                <button
+                  onClick={onOpenSetup}
+                  className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-indigo-950/70 hover:bg-indigo-900 text-indigo-300 text-xs font-semibold border border-indigo-500/40 transition-all cursor-pointer shadow-md"
+                >
+                  <Download className="w-4 h-4 text-indigo-400" />
+                  <span>Download Setup Files</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -86,16 +94,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
             <div className="flex items-center gap-4">
               <div className="relative">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-black text-xl shadow-lg ring-2 ring-indigo-400/40">
-                  A
+                  AM
                 </div>
                 <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-950" />
               </div>
               <div>
                 <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                  <span>Asfand</span>
+                  <span>Asfand Mustafa</span>
                   <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 fill-indigo-400/20" />
                 </h3>
-                <p className="text-xs text-indigo-400 font-medium">Software & Audio Developer</p>
+                <p className="text-xs text-indigo-400 font-medium">Software & Audio Engineer</p>
                 <p className="text-[11px] text-slate-400">Creator of Submind Studio</p>
               </div>
             </div>
@@ -113,7 +121,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Security</span>
                 </span>
-                <span className="text-emerald-400 font-semibold">100% Client-Side</span>
+                <span className="text-emerald-400 font-semibold">100% On-Device</span>
               </div>
               <div className="flex items-center justify-between text-slate-400">
                 <span className="flex items-center gap-1.5">
@@ -129,13 +137,24 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
               </div>
             </div>
 
-            <a
-              href="mailto:asfandmustafa3@gmail.com"
-              className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer"
-            >
-              <Mail className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Get In Touch</span>
-            </a>
+            <div className="flex items-center gap-2 pt-1">
+              <a
+                href="mailto:asfandmustafa3@gmail.com"
+                className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Contact</span>
+              </a>
+              {onOpenSetup && (
+                <button
+                  onClick={onOpenSetup}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 text-xs font-semibold border border-indigo-500/40 transition-colors cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Setup Files</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -149,240 +168,202 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, hasAudio }) => {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             What Submind Audio Studio Offers
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Engineered with privacy, precision, and speed in mind. Here is what this suite brings to your workflow:
+          <p className="text-xs sm:text-sm text-slate-400">
+            A comprehensive, zero-cost audio workstation engineered from the ground up for high-fidelity signal processing.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Pillar 1 */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <ShieldCheck className="w-5 h-5" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3 relative overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <Lock className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-white">100% In-Browser Privacy</h3>
+            <h3 className="text-base font-bold text-white">100% Local & Zero Uploads</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Your audio is processed strictly inside your device’s Web Audio memory. No server uploads, no data retention, and zero cloud leaks.
+              Your sensitive recordings, private podcast cuts, and vocal tracks never touch third-party servers. All digital signal processing happens directly in your browser using the Web Audio API.
             </p>
           </div>
 
-          {/* Pillar 2 */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-              <Scissors className="w-5 h-5" />
-            </div>
-            <h3 className="text-sm font-bold text-white">Automated Silence Cutting</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Detect pauses down to the millisecond. Cut dead air, shorten gaps, or speed up quiet sections with instant NLE timeline export (EDL/CSV).
-            </p>
-          </div>
-
-          {/* Pillar 3 */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-              <FileText className="w-5 h-5" />
-            </div>
-            <h3 className="text-sm font-bold text-white">Gemini 3.7 AI Transcriptions</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Convert speech to text in 55+ languages, generate structured meeting summaries, extract action items, and audit filler words.
-            </p>
-          </div>
-
-          {/* Pillar 4 */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+          <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3 relative overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
               <Zap className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-white">Full DSP Studio Toolkit</h3>
+            <h3 className="text-base font-bold text-white">Zero Wait Time & Instant Export</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Comprehensive noise removal, dynamic compression, multi-track merging, audio/video format conversion, speed modulation, and TTS.
+              No subscription paywalls, no artificial file size limits, and no audio throttling. Export your polished tracks to 16/24/32-bit WAV, MP3, OGG, or Premiere EDL timelines in milliseconds.
+            </p>
+          </div>
+
+          <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-3 relative overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-white">Gemini 3.7 AI Intelligence</h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Integrates state-of-the-art Gemini 3.7 Flash models for verbatim audio speech-to-text, executive summaries, meeting action items, and vocal filler word detection.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 3. Featured Tools Grid with Quick Launch */}
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-white">Featured Studio Tools</h2>
-            <p className="text-xs text-slate-400">Directly jump into any audio utility below</p>
+      {/* 3. GitHub Setup & Desktop Download Section */}
+      <section className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-[11px] font-semibold border border-indigo-500/30">
+              <Github className="w-3.5 h-3.5" />
+              <span>Open Source & Local Desktop Setup</span>
+            </div>
+            <h3 className="text-xl font-bold text-white">
+              Install & Run On Your Own Device
+            </h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Download automated setup scripts for Windows, macOS, or Linux. Run Submind Audio Studio offline on your machine with full digital audio workstation performance.
+            </p>
           </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {onOpenSetup && (
+              <button
+                onClick={onOpenSetup}
+                className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer hover:scale-105"
+              >
+                <Download className="w-4 h-4" />
+                <span>Open Setup & Download Hub</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. The 10 Essential Tools Deep Dive */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+              Suite Capabilities
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              10 Professional Audio Utilities in One Place
+            </h2>
+          </div>
+
           <button
             onClick={() => onNavigate('directory')}
-            className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
           >
-            <span>View All 10 Tools</span>
+            <span>View All Tools</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Tool 1 */}
-          <div
-            onClick={() => onNavigate('silence')}
-            className="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-indigo-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
-                <Scissors className="w-5 h-5" />
+          {[
+            {
+              id: 'silence' as ToolTab,
+              icon: Scissors,
+              title: 'Silence Remover',
+              tag: 'FLAGSHIP',
+              desc: 'Auto-detect silent gaps with dB threshold controls and micro-fades. Speed up or delete pauses in 1 click.',
+              color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+            },
+            {
+              id: 'noise' as ToolTab,
+              icon: VolumeX,
+              title: 'Noise Canceller & Gate',
+              tag: 'DSP AUDIO',
+              desc: 'Spectral gating, high-pass rumble removal, hiss suppression, and vocal presence enhancement.',
+              color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+            },
+            {
+              id: 'transcribe' as ToolTab,
+              icon: FileText,
+              title: 'AI Audio to Text',
+              tag: 'GEMINI 3.7',
+              desc: 'Generate accurate verbatim transcripts, executive summaries, action items, and filler word detection.',
+              color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+            },
+            {
+              id: 'recorder' as ToolTab,
+              icon: Mic,
+              title: 'Studio Voice Recorder',
+              tag: 'HQ CAPTURE',
+              desc: 'High-sample-rate microphone capture with real-time waveform visualizers and instant tool forwarding.',
+              color: 'text-rose-400 bg-rose-500/10 border-rose-500/20',
+            },
+            {
+              id: 'trimmer' as ToolTab,
+              icon: Sliders,
+              title: 'Precision Audio Trimmer',
+              tag: 'TIMELINE',
+              desc: 'Cut start and end markers with millisecond accuracy, interactive playheads, and zoomable waveforms.',
+              color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+            },
+            {
+              id: 'merger' as ToolTab,
+              icon: Layers,
+              title: 'Multi-Track Audio Merger',
+              tag: 'MIXER',
+              desc: 'Combine and sequence multiple audio tracks with volume balancing and crossfading into a single file.',
+              color: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+            },
+            {
+              id: 'speed' as ToolTab,
+              icon: Gauge,
+              title: 'Speed & Pitch Shaper',
+              tag: 'DSP RESAMPLING',
+              desc: 'Change audio tempo from 0.25x to 4.0x with optional pitch lock or creative vinyl pitch drops.',
+              color: 'text-teal-400 bg-teal-500/10 border-teal-500/20',
+            },
+            {
+              id: 'compressor' as ToolTab,
+              icon: Wand2,
+              title: 'Dynamic Range Compressor',
+              tag: 'MASTERING',
+              desc: 'Even out spoken volume levels with broadcast threshold, knee, attack, release, and makeup gain.',
+              color: 'text-fuchsia-400 bg-fuchsia-500/10 border-fuchsia-500/20',
+            },
+            {
+              id: 'converter' as ToolTab,
+              icon: RefreshCw,
+              title: 'Format Converter',
+              tag: 'UNIVERSAL',
+              desc: 'Convert any audio file between WAV (16/24/32-bit), MP3, OGG, FLAC, and WebM instantly.',
+              color: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+            },
+          ].map((tool) => (
+            <div
+              key={tool.id}
+              onClick={() => onNavigate(tool.id)}
+              className="bg-slate-900/60 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className={`w-9 h-9 rounded-xl border flex items-center justify-center ${tool.color}`}>
+                    <tool.icon className="w-4 h-4" />
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                    {tool.tag}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">
+                    {tool.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">{tool.desc}</p>
+                </div>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                Flagship
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">
-                Audio Silence Remover
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Auto-cut awkward pauses, hesitations, and dead air with waveform timeline.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-indigo-400 pt-2 border-t border-slate-800">
-              <span>Open Silence Remover</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
 
-          {/* Tool 2 */}
-          <div
-            onClick={() => onNavigate('transcribe')}
-            className="bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-purple-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
-                <FileText className="w-5 h-5" />
+              <div className="pt-4 mt-2 border-t border-slate-800/60 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-indigo-400 transition-colors">
+                <span>Launch Tool</span>
+                <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                Gemini AI
-              </span>
             </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
-                AI Transcriber & Notes
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Accurate speech-to-text, key summary takeaways, and filler word detection.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-purple-400 pt-2 border-t border-slate-800">
-              <span>Open Transcriber</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
-
-          {/* Tool 3 */}
-          <div
-            onClick={() => onNavigate('recorder')}
-            className="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-amber-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
-                <Mic className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                Live Mic
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-                Voice Recorder & Waveform
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Capture microphone voice notes with real-time frequency visualizer.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-amber-400 pt-2 border-t border-slate-800">
-              <span>Open Voice Recorder</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
-
-          {/* Tool 4 */}
-          <div
-            onClick={() => onNavigate('noise')}
-            className="bg-slate-900 border border-slate-800 hover:border-teal-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-teal-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center">
-                <VolumeX className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                DSP Clean
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-teal-300 transition-colors">
-                AI Noise Remover
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Filter air conditioning hum, mic hiss, fan rumble, and boost vocal clarity.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-teal-400 pt-2 border-t border-slate-800">
-              <span>Open Noise Remover</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
-
-          {/* Tool 5 */}
-          <div
-            onClick={() => onNavigate('merger')}
-            className="bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-blue-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
-                <Layers className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                Multi-Stem
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
-                Audio Merger & Crossfade
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Sequence and blend multiple audio tracks with smooth crossfade overlaps.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-blue-400 pt-2 border-t border-slate-800">
-              <span>Open Audio Merger</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
-
-          {/* Tool 6 */}
-          <div
-            onClick={() => onNavigate('converter')}
-            className="bg-slate-900 border border-slate-800 hover:border-violet-500/50 rounded-2xl p-5 space-y-3 transition-all cursor-pointer group hover:shadow-lg hover:shadow-violet-500/5"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-400 flex items-center justify-center">
-                <RefreshCw className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                Video/Audio
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
-                Format & Video Converter
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Convert WAV, MP3, FLAC, M4A, and extract audio from MP4/MOV videos.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-violet-400 pt-2 border-t border-slate-800">
-              <span>Open Format Converter</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* 4. Three Step Easy Workflow */}
+      {/* 5. Three Step Easy Workflow */}
       <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 space-y-6">
         <div className="text-center space-y-1">
           <h2 className="text-lg font-bold text-white">How Submind Studio Works</h2>

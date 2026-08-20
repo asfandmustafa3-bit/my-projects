@@ -23,6 +23,7 @@ import { SilenceSettingsPanel } from './components/SilenceSettingsPanel';
 import { SegmentsList } from './components/SegmentsList';
 import { AudioStatsCard } from './components/AudioStatsCard';
 import { ExportModal } from './components/ExportModal';
+import { GithubSetupModal } from './components/GithubSetupModal';
 
 // Home & Directory Hub
 import { HomePage } from './components/HomePage';
@@ -84,6 +85,7 @@ export default function App() {
 
   // UI Modals & Loading
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isSetupModalOpen, setIsSetupModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
@@ -362,6 +364,7 @@ export default function App() {
         fileName={fileMeta?.name}
         activeTab={activeTab}
         onSelectTab={setActiveTab}
+        onOpenSetup={() => setIsSetupModalOpen(true)}
       />
 
       {/* Submind Suite Tool Navigation Bar */}
@@ -415,6 +418,7 @@ export default function App() {
           <HomePage
             onNavigate={setActiveTab}
             hasAudio={Boolean(audioBuffer)}
+            onOpenSetup={() => setIsSetupModalOpen(true)}
           />
         )}
 
@@ -658,12 +662,18 @@ export default function App() {
         fileName={fileMeta?.name || 'audio'}
       />
 
+      {/* GitHub Local Device Setup & Scripts Modal */}
+      <GithubSetupModal
+        isOpen={isSetupModalOpen}
+        onClose={() => setIsSetupModalOpen(false)}
+      />
+
       {/* Footer */}
       <footer className="border-t border-slate-800/80 py-6 text-xs text-slate-500 bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
             <span className="font-semibold text-slate-300">
-              Submind Audio Studio • Built by <strong className="text-white font-bold">Asfand</strong>
+              Submind Audio Studio • Engineered by <strong className="text-white font-bold">Asfand Mustafa</strong>
             </span>
             <span className="hidden sm:inline text-slate-700">•</span>
             <a

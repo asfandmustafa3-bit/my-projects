@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ShieldCheck, RefreshCw, Grid, Disc3, Home } from 'lucide-react';
+import { Sparkles, ShieldCheck, RefreshCw, Grid, Disc3, Home, Download, Github } from 'lucide-react';
 import { ToolTab } from '../types';
 
 interface HeaderProps {
@@ -8,6 +8,7 @@ interface HeaderProps {
   fileName?: string;
   activeTab: ToolTab;
   onSelectTab: (tab: ToolTab) => void;
+  onOpenSetup?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   fileName,
   activeTab,
   onSelectTab,
+  onOpenSetup,
 }) => {
   return (
     <header
@@ -39,13 +41,13 @@ export const Header: React.FC<HeaderProps> = ({
                   Audio Studio
                 </span>
               </h1>
-              <span className="bg-indigo-500/20 text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo-500/30 flex items-center gap-1">
+              <span className="bg-indigo-500/15 text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo-500/30 flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5 text-indigo-400" />
-                <span>DEV: ASFAND</span>
+                <span>By Asfand Mustafa</span>
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Free, private in-browser AI audio suite by developer Asfand — 100% on-device
+              High-Performance In-Browser AI Audio Suite • Engineered by Asfand Mustafa
             </p>
           </div>
         </div>
@@ -77,6 +79,17 @@ export const Header: React.FC<HeaderProps> = ({
             <Grid className="w-3.5 h-3.5 text-indigo-400" />
             <span>Free Tools</span>
           </button>
+
+          {/* Download Setup / GitHub Modal Button */}
+          {onOpenSetup && (
+            <button
+              onClick={onOpenSetup}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-950/60 hover:bg-indigo-900/80 border border-indigo-500/40 text-indigo-200 text-xs font-semibold transition-all cursor-pointer shadow-sm hover:scale-105"
+            >
+              <Download className="w-3.5 h-3.5 text-indigo-400" />
+              <span className="hidden md:inline">Download Setup</span>
+            </button>
+          )}
 
           {/* Privacy Guarantee Badge */}
           <div className="hidden lg:flex items-center gap-1.5 bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 px-3 py-1.5 rounded-xl text-xs font-semibold">

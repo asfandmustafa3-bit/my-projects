@@ -51,17 +51,28 @@ app.post('/api/ai/transcribe', async (req, res) => {
       return res.status(400).json({ error: 'Missing audioBase64 data in request body.' });
     }
 
-    // Clean base64 string if it contains data URI header
-    const cleanBase64 = audioBase64.replace(/^data:audio\/[a-z0-9-]+;base64,/, '');
+    // Robustly clean base64 string
+    let cleanBase64 = String(audioBase64);
+    if (cleanBase64.includes('base64,')) {
+      cleanBase64 = cleanBase64.split('base64,')[1];
+    } else {
+      cleanBase64 = cleanBase64.replace(/^data:[^;]+;base64,/, '');
+    }
+    cleanBase64 = cleanBase64.trim().replace(/[\r\n\s]/g, '');
 
-    const systemInstruction = `You are Submind AI, an expert audio transcriber and audio analyst.
-Analyze the provided audio recording. Provide:
-1. An accurate verbatim transcription of spoken words with speaker turns and approximate timestamps if identifiable.
-2. A concise executive summary of the content (2-3 sentences).
-3. Key bullet points and takeaways.
-4. Action items or follow-ups mentioned.
-5. Detected filler words (e.g. "um", "uh", "like", "you know", "sort of") and awkward pauses.
-6. Audio tone and sentiment (e.g. Professional, Casual, Educational, Energetic, Serious).`;
+    // Normalize MIME type
+    let normalizedMime = mimeType ? String(mimeType).split(';')[0].trim().toLowerCase() : 'audio/wav';
+    if (!normalizedMime.startsWith('audio/')) {
+      normalizedMime = 'audio/wav';
+    }
+
+    const systemInstruction = `You are Submind AI, an expert speech recognition and audio analysis intelligence engine.
+Analyze the provided audio recording thoroughly.
+Key Directives:
+1. Provide an accurate, high-fidelity verbatim transcription of all spoken words.
+2. Structure speech naturally with clear sentence boundaries, proper punctuation, and capitalization.
+3. If the speaker stutters, pauses, or says names, transcribe them cleanly and professionally without excessive chopping or repetitive fragments.
+4. Extract an insightful executive summary, actionable takeaways, and vocal pacing metrics.`;
 
     const response = await ai.models.generateContent({
       model: 'gemini-3.7-flash',
@@ -70,11 +81,11 @@ Analyze the provided audio recording. Provide:
           {
             inlineData: {
               data: cleanBase64,
-              mimeType: mimeType.includes('audio/') ? mimeType : 'audio/wav',
+              mimeType: normalizedMime,
             },
           },
           {
-            text: promptInstruction || 'Please transcribe this audio and provide structured notes, summary, key points, action items, and filler words detection.',
+            text: promptInstruction || 'Transcribe this audio recording verbatim and generate structured meeting notes, takeaways, action items, and speech analysis.',
           },
         ],
       },
@@ -86,7 +97,7 @@ Analyze the provided audio recording. Provide:
           properties: {
             transcript: {
               type: Type.STRING,
-              description: 'Full verbatim transcript of the audio with speaker tags if multiple speakers exist.',
+              description: 'Full verbatim transcript of the audio with clean paragraph breaks and speaker tags if multiple speakers are present.',
             },
             summary: {
               type: Type.STRING,
@@ -117,7 +128,7 @@ Analyze the provided audio recording. Provide:
             },
             sentiment: {
               type: Type.STRING,
-              description: 'Tone, mood, or speech pacing analysis.',
+              description: 'Tone, mood, or speech pacing analysis (e.g. Confident, Conversational, Technical, Educational).',
             },
             estimatedWordsCount: {
               type: Type.INTEGER,
